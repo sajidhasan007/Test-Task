@@ -15,9 +15,7 @@ import {
   SortableContext,
   rectSortingStrategy,
 } from "@dnd-kit/sortable";
-import Grid from "./Grid";
-import SortableItem from "./SortableItem";
-import Item from "./Item";
+import { Grid, Item, SortableItem, TopBar } from "./components";
 
 const App: FC = () => {
   const [items, setItems] = useState(
@@ -38,8 +36,16 @@ const App: FC = () => {
   );
   const [selectedItem, setSelectedItem] = useState<string[]>([]);
 
+  console.log("my selected items are", selectedItem);
+
   const [activeId, setActiveId] = useState<string | null>(null);
   const sensors = useSensors(useSensor(MouseSensor), useSensor(TouchSensor));
+
+  const removeItems = () => {
+    const filteredA = items.filter((item) => !selectedItem.includes(item));
+    setItems(filteredA);
+    setSelectedItem([]);
+  };
 
   const handleDragStart = useCallback((event: DragStartEvent) => {
     setActiveId(event.active.id);
@@ -63,42 +69,54 @@ const App: FC = () => {
   }, []);
 
   return (
-    <DndContext
-      sensors={sensors}
-      collisionDetection={closestCenter}
-      onDragStart={handleDragStart}
-      onDragEnd={handleDragEnd}
-      onDragCancel={handleDragCancel}
+    <div
+      style={{
+        maxWidth: "800px",
+        margin: "100px auto",
+      }}
+      className="p-5"
     >
-      <SortableContext items={items} strategy={rectSortingStrategy}>
-        <Grid columns={5}>
-          {items.map((id, index) => (
-            // <div key={index} onMouseDown={() => console.log("click")}>
-            <SortableItem key={id} id={id} isFirst={index === 0} />
-            // </div>
-          ))}
-        </Grid>
-      </SortableContext>
-      <DragOverlay
-        adjustScale
-        style={{
-          transformOrigin: "0 0 ",
-        }}
+      <TopBar removeItems={removeItems} selectedItem={selectedItem} />
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragStart={handleDragStart}
+        onDragEnd={handleDragEnd}
+        onDragCancel={handleDragCancel}
       >
-        <div className="">
-          {activeId ? (
-            <Item
-              id={activeId}
-              isDragging
-              isFirst={items.indexOf(activeId) === 0}
-            />
-          ) : null}
-        </div>
-      </DragOverlay>
-      <div onClick={() => console.log("click")}>
-        <h1>Sajid hasan</h1>
-      </div>
-    </DndContext>
+        <SortableContext items={items} strategy={rectSortingStrategy}>
+          <Grid columns={5}>
+            {items.map((id, index) => (
+              // <div key={index} onMouseDown={() => console.log("click")}>
+              <SortableItem
+                key={id}
+                id={id}
+                isFirst={index === 0}
+                selectedItem={selectedItem}
+                setSelectedItem={setSelectedItem}
+              />
+              // </div>
+            ))}
+          </Grid>
+        </SortableContext>
+        <DragOverlay
+          adjustScale
+          style={{
+            transformOrigin: "0 0 ",
+          }}
+        >
+          <div className="">
+            {activeId ? (
+              <Item
+                id={activeId}
+                isDragging
+                isFirst={items.indexOf(activeId) === 0}
+              />
+            ) : null}
+          </div>
+        </DragOverlay>
+      </DndContext>
+    </div>
   );
 };
 

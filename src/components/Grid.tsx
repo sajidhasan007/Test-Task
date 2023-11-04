@@ -10,11 +10,11 @@ const Grid: FC<GridProps> = ({ children, columns }) => {
     <div
       style={{
         display: "grid",
-        gridTemplateColumns: `repeat(${columns}, 1fr)`,
+        gridTemplateColumns: `repeat(${5}, 1fr)`,
         gridGap: 20,
         maxWidth: "800px",
-        margin: "100px auto",
       }}
+      // className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
     >
       {children}
     </div>

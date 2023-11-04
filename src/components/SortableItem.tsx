@@ -25,6 +25,8 @@ const SortableItem: FC<ItemProps> = (props) => {
       style={style}
       withOpacity={isDragging}
       isFirst={props.isFirst}
+      selectedItem={props.selectedItem}
+      setSelectedItem={props.setSelectedItem}
       {...props}
       {...attributes}
       {...listeners}
