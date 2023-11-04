@@ -14,7 +14,6 @@ const Grid: FC<GridProps> = ({ children, columns }) => {
         gridGap: 20,
         maxWidth: "800px",
       }}
-      // className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
     >
       {children}
     </div>

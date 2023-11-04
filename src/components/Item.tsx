@@ -93,7 +93,13 @@ const Item = forwardRef<HTMLDivElement, ItemProps>(
           </div>
         </div>
         <div className="absolute top-0 ml-3 mt-2 mb-5 z-50 test-border">
-          <input type="checkbox" onClick={() => addValue(id)} />
+          <input
+            type="checkbox"
+            onClick={() => addValue(id)}
+            className={`${
+              selectedItem?.includes(id) ? "block" : "hidden group-hover:block"
+            } `}
+          />
         </div>
       </div>
     );
