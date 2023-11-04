@@ -9,15 +9,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@dnd-kit/core": "^3.0.3",
+    "@dnd-kit/sortable": "^3.0.1",
+    "@dnd-kit/utilities": "^2.0.0",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@mui/material": "^5.11.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-gesture-responder": "^2.1.0",
-    "@dnd-kit/core": "^3.0.3",
-    "@dnd-kit/sortable": "^3.0.1",
-    "@dnd-kit/utilities": "^2.0.0",
+    "react-icons": "^4.11.0",
     "tailwindcss": "^3.3.5"
   },
   "devDependencies": {

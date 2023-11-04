@@ -1,9 +1,4 @@
-import React, {
-  forwardRef,
-  HTMLAttributes,
-  CSSProperties,
-  useState,
-} from "react";
+import { forwardRef, HTMLAttributes, CSSProperties } from "react";
 
 export type ItemProps = HTMLAttributes<HTMLDivElement> & {
   id: string;
@@ -31,46 +26,20 @@ const Item = forwardRef<HTMLDivElement, ItemProps>(
     const inlineStyles: CSSProperties = {
       opacity: withOpacity ? "0.5" : "1",
       transformOrigin: "50% 50%",
-      height: isFirst ? "" : "",
-      width: isFirst && isDragging ? "140px" : "100%",
-      borderRadius: "10px",
+      borderRadius: "8px",
       cursor: isDragging ? "grabbing" : "grab",
       backgroundColor: "#ffffff",
-      // display: "flex",
-      // justifyContent: "center",
-      // alignItems: "center",
       boxShadow: isDragging
         ? "rgb(63 63 68 / 5%) 0px 2px 0px 2px, rgb(34 33 81 / 15%) 0px 2px 3px 2px"
         : "rgb(63 63 68 / 5%) 0px 0px 0px 1px, rgb(34 33 81 / 15%) 0px 1px 3px 0px",
       transform: isDragging ? "scale(1.05)" : "scale(1)",
-      // gridColumn: isFirst && !isDragging ? "span 2" : "auto",
-      // gridRow: isFirst && !isDragging ? "span 2" : "auto",
-      background: isDragging ? "yellow" : "",
       overflow: "hidden",
       ...style,
     };
-
-    const inlineStyles2: CSSProperties = {
-      opacity: withOpacity ? "0.5" : "1",
-      transformOrigin: "50% 50%",
-      height: isFirst && isDragging ? "" : "", // Adjust the height for the first item when dragging
-      width: "", // Keep the width as it is
-      borderRadius: "10px",
-      cursor: isDragging ? "grabbing" : "grab",
-      backgroundColor: "#ffffff",
-      boxShadow: isDragging
-        ? "rgb(63 63 68 / 5%) 0px 2px 0px 2px, rgb(34 33 81 / 15%) 0px 2px 3px 2px"
-        : "rgb(63 63 68 / 5%) 0px 0px 0px 1px, rgb(34 33 81 / 15%) 0px 1px 3px 0px",
-      transform: isDragging ? "scale(1.05)" : "scale(1)",
-      background: isDragging ? "gray" : "",
-      overflow: "hidden",
-    };
-
     const gridStyle: CSSProperties = {
       gridColumn: isFirst && !isDragging ? "span 2" : "auto",
       gridRow: isFirst && !isDragging ? "span 2" : "auto",
     };
-    // console.log("my selected items are = ", selectedItem);
     const addValue = (value: string) => {
       if (selectedItem?.includes(value)) {
         const newArray = selectedItem.filter((item: string) => item !== value);
@@ -79,16 +48,18 @@ const Item = forwardRef<HTMLDivElement, ItemProps>(
         setSelectedItem!([...selectedItem!, value]);
       }
     };
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    console.log("my agent is = ", isMobile);
     return (
-      <div style={gridStyle} className="relative group">
+      <div style={gridStyle} className="relative group border rounded-lg">
         <div
           ref={ref}
-          style={isDragging ? inlineStyles2 : inlineStyles}
+          style={inlineStyles}
           {...props}
           className="item-container"
         >
           <div className="relative">
-            <img src={id} alt="Image" className="" />
+            <img src={id} alt="Image" />
             <span className="absolute w-full h-full top-0 left-0 hover:bg-black hover:opacity-25"></span>
           </div>
         </div>
@@ -97,7 +68,11 @@ const Item = forwardRef<HTMLDivElement, ItemProps>(
             type="checkbox"
             onClick={() => addValue(id)}
             className={`${
-              selectedItem?.includes(id) ? "block" : "hidden group-hover:block"
+              selectedItem?.includes(id)
+                ? "block"
+                : isMobile
+                ? "block"
+                : "hidden group-hover:block"
             } `}
           />
         </div>

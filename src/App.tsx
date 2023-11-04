@@ -1,4 +1,4 @@
-import React, { FC, useState, useCallback } from "react";
+import { FC, useState, useCallback } from "react";
 import {
   DndContext,
   closestCenter,
@@ -18,22 +18,19 @@ import {
 import { Grid, Item, SortableItem, TopBar } from "./components";
 
 const App: FC = () => {
-  const [items, setItems] = useState(
-    [
-      "/image-1.webp",
-      "/image-2.webp",
-      "/image-3.webp",
-      "/image-4.webp",
-      "/image-5.webp",
-      "/image-6.webp",
-      "/image-7.webp",
-      "/image-8.webp",
-      "/image-9.webp",
-      "/image-10.jpeg",
-      "/image-11.jpeg",
-    ]
-    // Array.from({ length: 20 }, (_, i) => (i + 1).toString())
-  );
+  const [items, setItems] = useState([
+    "/image-1.webp",
+    "/image-2.webp",
+    "/image-3.webp",
+    "/image-4.webp",
+    "/image-5.webp",
+    "/image-6.webp",
+    "/image-7.webp",
+    "/image-8.webp",
+    "/image-9.webp",
+    "/image-10.jpeg",
+    "/image-11.jpeg",
+  ]);
   const [selectedItem, setSelectedItem] = useState<string[]>([]);
 
   console.log("my selected items are", selectedItem);
@@ -87,7 +84,6 @@ const App: FC = () => {
         <SortableContext items={items} strategy={rectSortingStrategy}>
           <Grid columns={5}>
             {items.map((id, index) => (
-              // <div key={index} onMouseDown={() => console.log("click")}>
               <SortableItem
                 key={id}
                 id={id}
@@ -95,7 +91,6 @@ const App: FC = () => {
                 selectedItem={selectedItem}
                 setSelectedItem={setSelectedItem}
               />
-              // </div>
             ))}
           </Grid>
         </SortableContext>
